@@ -1,6 +1,7 @@
 import { config as dotEnvConfig } from "dotenv";
 dotEnvConfig();
-
+import { task } from "hardhat/config";
+import deploy from "./scripts/deploy";
 import "@nomiclabs/hardhat-waffle";
 import "@typechain/hardhat";
 import "@nomiclabs/hardhat-etherscan";
@@ -13,10 +14,14 @@ const RINKEBY_PRIVATE_KEY =
   "0xc87509a1c067bbde78beb793e6fa76530b6382a4c0241e5e4a9ec0a0f44dc0d3"; // well known private key
 const ETHERSCAN_API_KEY = process.env.ETHERSCAN_API_KEY;
 
+task("dev:deployTestnet").setAction(async (args, hre) => {
+  await deploy(hre.ethers);
+});
+
 const config = {
   defaultNetwork: "hardhat",
   solidity: {
-    compilers: [{ version: "0.8.5", settings: {} }],
+    compilers: [{ version: "0.8.4", settings: {} }],
   },
   networks: {
     hardhat: {},
